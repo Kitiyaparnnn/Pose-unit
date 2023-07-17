@@ -1,0 +1,77 @@
+.main-card {
+  height: 100%;
+}
+
+.dropdown-container {
+  text-align: center;
+  border-radius: 0.5rem;
+}
+
+.dropdown-toggle {
+  color: blue;
+}
+
+.vertical-scrollable > .row {
+  position: absolute;
+  max-height: 100vh;
+  height: 85%;
+  width: 100%;
+  overflow-y: scroll;
+  /* bottom: 1%; */
+}
+
+.list-group1 {
+  /* max-height: 400px; */
+  max-height: 360px;
+  margin-bottom: 10px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.list-group2 {
+  /* max-height: 400px; */
+  max-height: 500px;
+  margin-bottom: 10px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.btnClick_Fixed-cost {
+  background-color: rgba(0, 0, 255, 0.50);
+  color: white;
+  border-color: rgba(0, 0, 255, 0.5);
+}
+
+button:focus {
+  outline: none;
+}
+
+.btnClick_No_Fixed-cost {
+  background-color: white;
+  border-color: rgb(222, 222, 222);
+  border-width: 1px 1px 0px 0px;
+}
+
+.list-btn {
+  background-color: white;
+}
+.list-btn:focus {
+  background-color: rgb(206, 206, 206);
+  box-shadow: none;
+}
+
+@media (min-width: 500px) {
+  .list-group2 {
+    max-height: 400px;
+  }
+
+  .mian-table {
+    height: 200px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 100%;
+  }
+}
