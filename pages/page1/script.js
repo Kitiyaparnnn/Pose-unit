@@ -1,20 +1,19 @@
-
-
-
 $(function () {
   const next_btn = $("<i>").addClass("fas fa-arrow-right");
   $("#next-btn").click(openTap2);
-
   $("#btnClick1").click(openTap1);
+  $("#aboveSum").removeClass("d-flex").addClass("d-none");
+  $("#footer4").removeClass("d-flex").addClass("d-none");
 
   function openTap1() {
     $("#textHeadChange").text("1 ครั้งต่อเดือน");
-    $("#btn_textHeadChange").text(" 1 ครั้งต่อเดือน ").append(next_btn);
+    $("#btn_textHeadChange").text("ถัดไป : 1 ครั้งต่อเดือน ").append(next_btn);
     $("#back-btn").addClass("disabled");
     $("#next-btn").click(openTap2);
 
-    $("#footer4").attr("hidden", true);
-    $("#aboveSum").addClass("invisible");
+    $("#footer4").removeClass("d-flex").addClass("d-none");
+    $("#footer").removeClass("d-none").addClass("d-flex");
+    $("#aboveSum").removeClass("d-flex").addClass("d-none");
     $("#text1").text("รวม");
     $("#value1").text(
       getSum(cost).toLocaleString(undefined, { minimumFractionDigits: 2 })
@@ -70,12 +69,13 @@ $(function () {
 
   function openTap2() {
     $("#textHeadChange").text("1 ครั้งต่อสัปดาห์");
-    $("#btn_textHeadChange").text(" 1 ครั้งต่อสัปดาห์ ").append(next_btn);
+    $("#btn_textHeadChange").text("ถัดไป : 1 ครั้งต่อสัปดาห์ ").append(next_btn);
     $("#back-btn").removeClass("disabled").click(openTap1);
     $("#next-btn").click(openTap3);
 
-    $("#footer4").attr("hidden", true);
-    $("#aboveSum").removeClass("invisible");
+    $("#footer4").removeClass("d-flex").addClass("d-none");
+    $("#footer").removeClass("d-none").addClass("d-flex");
+    $("#aboveSum").removeClass("d-none").addClass("d-flex");
     $("#text1").text("จำนวนเฉลี่ยต่อรอบ");
     $("#value2").text(
       getSum(cost).toLocaleString(undefined, { minimumFractionDigits: 2 })
@@ -130,17 +130,19 @@ $(function () {
 
   function openTap3() {
     $("#textHeadChange").text("1 ครั้งต่อวัน");
-    $("#btn_textHeadChange").text(" 1 ครั้งต่อวัน ").append(next_btn);
+    $("#btn_textHeadChange").text("ถัดไป : 1 ครั้งต่อวัน ").append(next_btn);
     $("#back-btn").removeClass("disabled").click(openTap2);
     $("#next-btn").click(openTap4);
 
-    $("#footer4").attr("hidden", true);
-    $("#aboveSum").removeClass("invisible");
+
+    $("#footer").removeClass("d-none").addClass("d-flex");
+    $("#aboveSum").removeClass("d-none").addClass("d-flex");
     $("#text1").text("จำนวนเฉลี่ยต่อรอบ");
     $("#value2").text(
       getSum(cost).toLocaleString(undefined, { minimumFractionDigits: 2 })
     );
     $("#value1").text("20");
+    $("#footer4").removeClass("d-flex").addClass("d-none");
     // ===============================================
     $("#table_main1").attr("hidden", true);
     $("#table_main2").attr("hidden", true);
@@ -188,17 +190,16 @@ $(function () {
 
   $("#btnClick4").click(openTap4);
 
+  $("#addProgramName").attr("data-target", "#ModelAddProgram").attr("data-toggle", "modal")
+
   function openTap4() {
     $("#textHeadChange").text("ต้นทุนต่อรอบ");
-    $("#btn_textHeadChange").text(" บันทึกต้นทุน");
+    $("#btn_textHeadChange").text("บันทึกต้นทุน");
     $("#back-btn").removeClass("disabled").click(openTap3);
 
-    $("#footer").addClass("d-none");
-    $("#footer4").attr("hidden", false);
-    $("#aboveSum").addClass("invisible");
-    // $("#values").text(
-    //   getSum(cost).toLocaleString(undefined, { minimumFractionDigits: 2 })
-    // );
+    $("#footer").removeClass("d-flex").addClass("d-none");
+    $("#footer4").removeClass("d-none").addClass("d-flex");
+
     // ===============================================
     $("#table_main1").attr("hidden", true);
     $("#table_main2").attr("hidden", true);
@@ -379,7 +380,7 @@ $(function () {
     },
   ];
 
-  const programs = ["โปรแกรม1", "โปรแกรม2", "โปรแกรม3"];
+  const programs = ["โปรแกรม1", "โปรแกรม2", "โปรแกรม3", "โปรแกรม1", "โปรแกรม2", "โปรแกรม3"];
 
   $("#value1").text(
     getSum(cost).toLocaleString(undefined, { minimumFractionDigits: 2 })
@@ -406,9 +407,12 @@ $(function () {
     return sum;
   }
 
+  getSumTable4(cost2, programs);
   function getSumTable4(data, program) {
+    const values = $("#values");
     for (i = 0; i < program.length; i++) {
-      const container = $("<div>").addClass("container d-flex flex-row");
+      const container = $("<div>").addClass("container d-flex flex-column align-items-center");
+      const column = $("<div>").addClass("align-items-center");
       let sum = 0;
       const index = "cell" + (3 + i);
       data.forEach(function (item) {
@@ -420,8 +424,10 @@ $(function () {
           "text-align": "center",
           "font-weight": "bold",
         })
-        .text(sum);
+        .addClass("m-0")
+        .text(sum.toLocaleString(undefined, { minimumFractionDigits: 2 }));
       container.append(value1, $("<p>").text("บาท/วัน"));
+      // container.append(column);
       values.append(container);
     }
   }
@@ -486,7 +492,7 @@ $(function () {
       .attr("type", "button")
       .addClass("btn btn-primary")
       .text("เพิ่มต้นทุน")
-      .attr("data-target","#exampleModal").click(createAlertCard);
+      .attr("data-target", "#exampleModal").attr("data-toggle", "modal");
     cell4.append(clearButton, " ", addButton);
 
     row.append(cell1, cell2, cell3, cell4);
@@ -506,26 +512,29 @@ $(function () {
     var closeIcon = $('<span>').attr('aria-hidden', 'true').html('&times;');
     closeButton.append(closeIcon);
     modalHeader.append(modalTitle, closeButton);
-    
+
     var modalBody = $('<div>').addClass('modal-body');
     // Add your modal body content here
-    
+
     var modalFooter = $('<div>').addClass('modal-footer');
     var closeButtonFooter = $('<button>').attr('type', 'button').addClass('btn btn-secondary').attr('data-dismiss', 'modal').text('Close');
     var saveButton = $('<button>').attr('type', 'button').addClass('btn btn-primary').text('Save changes');
     modalFooter.append(closeButtonFooter, saveButton);
-    
+
     modalContent.append(modalHeader, modalBody, modalFooter);
     modalDialog.append(modalContent);
     modal.append(modalDialog);
-    
-    $('body').append(modal);    
+
+    $('body').append(modal);
     console.log("created alert");
   }
 
   function generateTable4(data, table, programs) {
     //thead
-    const thead = $("<thead>").addClass("thead-light");
+    const thead = $("<thead>").addClass("thead-light").css({
+      "position": "sticky",
+      "top": "0"
+    });
     const trow = $("<tr>");
     const h1 = $("<th>").css("text-align", "center").text("ต้นทุน");
     const h2 = $("<th>").css("text-align", "center").text("ชื่อต้นทุน");
@@ -589,7 +598,7 @@ $(function () {
             $("<button>")
               .attr("type", "button")
               .addClass("btn bg-white border")
-              .text(" + เพิ่มคอลัมน์")
+              .text(" + เพิ่มคอลัมน์").attr("data-target", "#exampleModalLong").attr("data-toggle", "modal")
           )
       );
 
@@ -603,7 +612,7 @@ $(function () {
         .attr("placeholder", "กรอกข้อมูล")
     );
     row.append(cell1, cell2);
-    for (i = 0; i < data.length; i++) {
+    for (i = 0; i < programs.length; i++) {
       const cell3 = $("<td>").append(
         $("<input>")
           .attr("type", "text")
@@ -623,7 +632,8 @@ $(function () {
     const addButton = $("<button>")
       .attr("type", "button")
       .addClass("btn btn-primary")
-      .text("เพิ่มต้นทุน");
+      .text("เพิ่มต้นทุน")
+      .attr("data-target", "#exampleModal").attr("data-toggle", "modal");
     cell4.append(clearButton, " ", addButton);
 
     row.append(cell4);
@@ -631,7 +641,37 @@ $(function () {
 
     table.append(tfooter);
   }
+
+  //add new program
+  generateAddProgram(programs);
+  function generateAddProgram(data) {
+    const list = $("#program-lists")
+    data.forEach(p => {
+      var card = $('<div>').addClass('card m-sm-1');
+      var cardBody = $('<div>').addClass('card-body row justify-content-between align-items-center p-sm-1 m-0');
+
+      var contentWrapper = $('<div>').addClass('d-flex felx-row align-items-center');
+      var barsIcon = $('<i>').addClass('fas fa-bars p-sm-2 fa-sm');
+      var checkboxInput = $('<input>').attr('type', 'checkbox').addClass('form-check-input m-0 position-relative').attr('aria-label', 'Checkbox for following text input').attr("checked",true);
+      var programText = $('<p>').addClass('text-center m-0 p-sm-2').text(p);
+      contentWrapper.append(barsIcon, checkboxInput, programText);
+
+      var closeIcon = $('<i>').addClass('fas fa-times p-sm-2');
+
+      cardBody.append(contentWrapper, closeIcon);
+      card.append(cardBody);
+      list.append(card);
+    })
+  }
+  $("#addNewProgram").on('click', addNewProgram)
+  function addNewProgram() {
+    var input = $("#program-name").val();
+    programs.push(input);
+    $("#addNewProgram").attr("data-dismiss", "modal");
+
+    console.log(programs);
+    generateAddProgram(programs);
+  }
 });
 
 
-// });
